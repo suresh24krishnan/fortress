@@ -1,15 +1,13 @@
 <<<<<<< HEAD
-<!--
 ---
 title: Project Fortress
 emoji: 🛡️
 colorFrom: indigo
 colorTo: blue
-sdk: streamlit
-app_file: ui/app.py
+sdk: docker
+app_port: 7860
 pinned: false
 ---
--->
 
 # Project FORTRESS
 
