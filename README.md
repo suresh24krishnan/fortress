@@ -87,3 +87,78 @@ FORTRESS evaluates infrastructure trust across several categories including:
 ---
 
 # Repository Structure
+
+
+api/ # Core assurance engine and verification logic
+policy/ # Control definitions and policy configuration
+infra/ # Infrastructure provisioning templates
+tools/ # Operational scripts and utilities
+ui/ # Streamlit assurance interface
+docs/ # Architecture and design documentation
+
+
+---
+
+# Running Locally
+
+### Create a Python environment
+
+
+python -m venv .venv
+
+
+Activate the environment:
+
+**Windows**
+
+
+.venv\Scripts\activate
+
+
+**Mac/Linux**
+
+
+source .venv/bin/activate
+
+
+---
+
+### Install dependencies
+
+
+pip install -r requirements.txt
+
+
+---
+
+### Start the application
+
+
+streamlit run ui/app.py
+
+
+---
+
+# Project Goals
+
+FORTRESS demonstrates how enterprise platforms can enforce **runtime environment assurance** before allowing critical workloads such as AI systems to execute.
+
+The project explores architectural patterns for:
+
+- deterministic infrastructure verification
+- policy-driven assurance controls
+- operational trust signals for release gating
+- evidence-based compliance validation
+
+---
+
+# Author
+
+**Suresh Krishnan**  
+Enterprise AI Architecture
+
+---
+
+# License
+
+This repository is provided for **demonstration and portfolio purposes**.
