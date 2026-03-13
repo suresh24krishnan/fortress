@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!--
 ---
 title: Project Fortress
@@ -164,3 +165,18 @@ Enterprise AI Architecture
 # License
 
 This repository is provided for **demonstration and portfolio purposes**.
+=======
+---
+title: Fortress
+emoji: 📊
+colorFrom: blue
+colorTo: blue
+sdk: gradio
+sdk_version: 6.9.0
+app_file: app.py
+pinned: false
+short_description: Environment Assurance
+---
+
+Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
+>>>>>>> cb84b638f4e1ed5533a495f5cb776fe7be6c63e0
