@@ -1,4 +1,4 @@
-<!--
+
 ---
 title: Project Fortress
 emoji: 🛡️
@@ -8,7 +8,7 @@ sdk: docker
 app_port: 7860
 pinned: false
 ---
--->
+
 
 # Project FORTRESS
 
@@ -161,6 +161,6 @@ Enterprise AI Architecture
 
 ---
 
-## License
+# License
 
-This project is provided for demonstration and portfolio purposes.
+This repository is provided for **demonstration and portfolio purposes**.
