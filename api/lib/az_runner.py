@@ -108,6 +108,17 @@ def run_az(cmd: Union[List[str], str], timeout_sec: int = 60, cwd: Optional[str]
     Why: allowing string commands causes Windows space-splitting bugs,
     e.g. 'C:\\Program' is not recognized...
     """
+    # ---------------------------------------
+    # DEMO MODE (used in HF Spaces)
+    # ---------------------------------------
+    if os.getenv("FORTRESS_DEMO_MODE", "").lower() == "true":
+        return AzResult(
+            ok=True,
+            code=0,
+            stdout="Disabled",
+            stderr="",
+            argv=["demo-mode"]
+        )
     az_path = _resolve_az_path()
     if not az_path:
         return AzResult(ok=False, code=127, stdout="", stderr="Azure CLI not found on PATH (or AZ_CLI_PATH).", argv=None)
