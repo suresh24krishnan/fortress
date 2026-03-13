@@ -1,4 +1,4 @@
-<!--
+
 ---
 title: Project Fortress
 emoji: 🛡️
@@ -8,7 +8,7 @@ sdk: streamlit
 app_file: ui/app.py
 pinned: false
 ---
--->
+
 
 # Project FORTRESS
 
