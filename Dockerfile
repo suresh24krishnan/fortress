@@ -9,4 +9,4 @@ COPY . .
 
 EXPOSE 7860
 
-CMD ["streamlit", "run", "ui/app.py", "--server.port=7860", "--server.address=0.0.0.0"]
+CMD ["./start.sh"]
