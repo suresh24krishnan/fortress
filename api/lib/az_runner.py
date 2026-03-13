@@ -115,7 +115,7 @@ def run_az(cmd: Union[List[str], str], timeout_sec: int = 60, cwd: Optional[str]
         return AzResult(
             ok=True,
             code=0,
-            stdout="Disabled",
+            stdout="Deny",
             stderr="",
             argv=["demo-mode"]
         )
