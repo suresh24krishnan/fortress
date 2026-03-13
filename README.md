@@ -10,123 +10,80 @@ pinned: false
 
 # Project FORTRESS
 
-Enterprise Environment Assurance Control Plane for AI and Cloud
+**Enterprise Environment Assurance Control Plane for AI and Cloud**
 
-FORTRESS is a Tier-0 environment assurance platform designed to verify infrastructure trust before AI systems are allowed to execute in production environments.
+FORTRESS is a **Tier-0 environment assurance platform** designed to verify infrastructure trust before AI systems are allowed to execute in production environments.
 
-The system performs deterministic, read-only verification of infrastructure controls and produces immutable evidence and trust signals used for operational decision making.
-
----
-
-## The Problem
-
-Enterprise AI systems increasingly run in dynamic environments where configuration drift, identity loss, or network boundary exposure may occur between audit cycles.
-
-Traditional governance mechanisms such as:
-
-• periodic audits  
-• static policy enforcement  
-• compliance attestations  
-
-do not verify whether an environment is actually trustworthy at runtime.
-
-FORTRESS addresses this gap by continuously validating environmental trust before execution.
+The system performs **deterministic, read-only verification of infrastructure controls** and produces **immutable evidence and trust signals** used for operational decision making.
 
 ---
 
-## Core Principles
+# The Problem
 
-**Evidence Over Assertion**  
-Environment trust is derived from observed runtime state rather than policy intent.
+Enterprise AI systems increasingly operate in **dynamic cloud environments** where configuration drift, identity loss, or network boundary exposure may occur between traditional audit cycles.
 
-**Deterministic Assurance**  
-Verification logic is deterministic and fail-closed.
+Common governance mechanisms such as:
 
-**Read-Only Evaluation**  
-No infrastructure mutation occurs during verification.
+- periodic audits  
+- static policy enforcement  
+- compliance attestations  
 
-**Operational Trust Signals**  
-Infrastructure telemetry is normalized into a consistent decision signal.
+do **not verify whether an environment is actually trustworthy at runtime**.
+
+This creates a critical operational gap where workloads may execute in environments whose **security posture has not been validated in real time**.
+
+FORTRESS addresses this problem by establishing **continuous environment assurance before execution**.
 
 ---
 
-## Architecture
+# Core Principles
 
-FORTRESS consists of the following components:
+### Evidence Over Assertion
+Environment trust is derived from **observed runtime state**, not policy intent or historical compliance records.
 
-**Observation Layer**  
-Collects runtime infrastructure state using cloud CLI/SDKs.
+### Deterministic Assurance
+Verification logic is **deterministic and fail-closed**, ensuring consistent outcomes.
 
-**Control Definition Catalog**  
-YAML policy definitions describing expected control states.
+### Read-Only Evaluation
+All verification operations are **non-intrusive** and do not modify infrastructure state.
 
-**Assurance Engine**  
-Compares observed state against expected policy definitions.
+### Operational Trust Signals
+Infrastructure telemetry is normalized into a **consistent trust signal** used for operational decision making.
 
-**Forensic Evidence Ledger**  
+---
+
+# Architecture
+
+FORTRESS evaluates infrastructure controls across multiple assurance domains and produces a **deterministic trust signal used for operational release decisions**.
+
+The platform consists of several core components:
+
+### Observation Layer
+Collects runtime infrastructure state using cloud CLI and SDK interfaces.
+
+### Control Definition Catalog
+Policy definitions written in YAML that describe expected control states.
+
+### Assurance Engine
+Compares observed infrastructure state against expected control definitions.
+
+### Forensic Evidence Ledger
 Immutable storage of execution evidence and validation results.
 
-**Assurance Interface**  
-Operational dashboard presenting environment trust signals.
+### Assurance Interface
+Operational dashboard presenting environment trust signals and validation outcomes.
 
 ---
 
-## Repository Structure
+# Example Control Domains
 
+FORTRESS evaluates infrastructure trust across several categories including:
 
-api/
-Core assurance engine and execution logic
-
-policy/
-Control definitions and policy configuration
-
-infra/
-Infrastructure provisioning templates
-
-tools/
-Operational scripts
-
-ui/
-Streamlit assurance interface
-
-docs/
-Reference architecture and design documentation
-
+- Network boundary protection
+- Identity and access validation
+- Secrets and key management
+- Infrastructure resilience controls
 
 ---
 
-## Example Control Domains
-
-• Network boundary protection  
-• Identity and access validation  
-• Secrets and key management  
-• Infrastructure resilience controls  
-
----
-
-## Running Locally
-
-Install dependencies:
-
-
-pip install -r requirements.txt
-
-
-Start the application:
-
-
-streamlit run ui/app.py
-
-
----
-
-## Author
-
-Suresh Krishnan  
-Enterprise AI Architecture
-
----
-
-## License
-
-This project is provided for demonstration and portfolio purposes.
+# Repository Structure
