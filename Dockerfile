@@ -7,6 +7,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
+RUN sed -i 's/\r$//' start.sh && chmod +x start.sh
+
 EXPOSE 7860
 
-CMD ["./start.sh"]
+CMD ["/bin/sh", "./start.sh"]
