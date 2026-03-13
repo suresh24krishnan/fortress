@@ -52,15 +52,23 @@ def _policy_path() -> str:
     """
     Resolve policy file location.
     Priority:
-      1) FORTRESS_POLICY env var (if set)
-      2) policy.yaml (default, next to this file)
+      1) FORTRESS_POLICY env var
+      2) repo_root/policy/policy.yaml
     """
     override = os.getenv("FORTRESS_POLICY")
-    if override:
+    if override and os.path.exists(override):
         return override
 
     here = os.path.dirname(os.path.abspath(__file__))
-    return os.path.join(here, "policy.yaml")
+    repo_root = os.path.dirname(here)
+    fallback = os.path.join(repo_root, "policy", "policy.yaml")
+
+    if os.path.exists(fallback):
+        return fallback
+
+    raise FileNotFoundError(
+        f"policy.yaml not found. Checked env override={override!r} and fallback={fallback!r}"
+    )
 
 
 def _as_list(val: Any) -> List[Any]:
