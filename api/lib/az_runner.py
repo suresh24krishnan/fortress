@@ -112,12 +112,60 @@ def run_az(cmd: Union[List[str], str], timeout_sec: int = 60, cwd: Optional[str]
     # DEMO MODE (used in HF Spaces)
     # ---------------------------------------
     if os.getenv("FORTRESS_DEMO_MODE", "").lower() == "true":
+        cmd_text = " ".join(str(x) for x in cmd) if isinstance(cmd, list) else str(cmd)
+
+        if "properties.publicNetworkAccess" in cmd_text:
+            return AzResult(
+                ok=True,
+                code=0,
+                stdout="Disabled",
+                stderr="",
+                argv=["demo-mode", "publicNetworkAccess"],
+            )
+
+        if "properties.networkAcls.defaultAction" in cmd_text:
+            return AzResult(
+                ok=True,
+                code=0,
+                stdout="Deny",
+                stderr="",
+                argv=["demo-mode", "defaultAction"],
+            )
+
+        if "properties.enableRbacAuthorization" in cmd_text:
+            return AzResult(
+                ok=True,
+                code=0,
+                stdout="true",
+                stderr="",
+                argv=["demo-mode", "rbac"],
+            )
+
+        if "properties.enablePurgeProtection" in cmd_text:
+            return AzResult(
+                ok=True,
+                code=0,
+                stdout="true",
+                stderr="",
+                argv=["demo-mode", "purgeProtection"],
+            )
+
+        if "privateEndpointConnections[0].id" in cmd_text:
+            return AzResult(
+                ok=True,
+                code=0,
+                stdout="/subscriptions/demo/resourceGroups/rg-fortress-dev/providers/Microsoft.Network/privateEndpoints/pe-fortress-dev",
+                stderr="",
+                argv=["demo-mode", "privateEndpoint"],
+            )
+
+        # managed identity / generic fallback
         return AzResult(
             ok=True,
             code=0,
-            stdout="Deny",
+            stdout="ok",
             stderr="",
-            argv=["demo-mode"]
+            argv=["demo-mode", "generic"],
         )
     az_path = _resolve_az_path()
     if not az_path:
