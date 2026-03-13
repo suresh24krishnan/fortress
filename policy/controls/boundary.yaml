@@ -1,0 +1,43 @@
+# policy/controls/boundary.yaml
+boundary_private_dns_resolution:
+  description: Boundary Proof — Key Vault DNS resolves to private IP inside the VPC/VNet boundary
+  risk_level: High
+  blast_radius: Network
+  plane: Boundary
+  impact: If DNS resolves publicly, workloads may route outside the private boundary
+  timeout_sec_max: 120
+  script:
+    - az
+    - network
+    - private-endpoint
+    - list
+    - -g
+    - rg-fortress-dev
+    - --query
+    - "[].{name:name,subnet:subnet.id,ip:customDnsConfigs[0].ipAddresses[0]}"
+    - -o
+    - json
+  remediation:
+    - Ensure Private DNS Zone is linked to the VNet and Private Endpoint is healthy
+
+boundary_keyvault_public_access_disabled:
+  description: Boundary Proof — Key Vault public access is disabled
+  risk_level: High
+  blast_radius: Data
+  plane: Boundary
+  impact: If public access is enabled, secrets may be reachable outside the boundary
+  timeout_sec_max: 120
+  script:
+    - az
+    - keyvault
+    - show
+    - -g
+    - rg-fortress-dev
+    - -n
+    - kv-fortress-dev
+    - --query
+    - properties.publicNetworkAccess
+    - -o
+    - tsv
+  remediation:
+    - az keyvault update -g rg-fortress-dev -n kv-fortress-dev --public-network-access Disabled

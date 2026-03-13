@@ -1,0 +1,12 @@
+subscription_name: "FORTRESS-Dev"
+resource_group: "rg-fortress-dev"
+location: "eastus"
+
+keyvault_name: "kv-fortress-dev"
+secret_name: "fortress-test-secret"
+
+seed_subnet_id: "/subscriptions/f46b1031-a085-4477-a0d7-3420e9ba2569/resourceGroups/rg-fortress-dev/providers/Microsoft.Network/virtualNetworks/fortress-dev-vnet/subnets/fortress-dev-zone2-seed"
+
+managed_identity_id: "/subscriptions/f46b1031-a085-4477-a0d7-3420e9ba2569/resourceGroups/rg-fortress-dev/providers/Microsoft.ManagedIdentity/userAssignedIdentities/mi-fortress-zone3-runtime"
+
+aci_image: "mcr.microsoft.com/azure-cli"

@@ -1,0 +1,142 @@
+environments:
+  dev:
+    subscription_name: FORTRESS-Dev
+    resource_group: rg-fortress-dev
+    location: eastus
+    keyvault_name: kv-fortress-dev
+proofs:
+  keyvault_controls_posture:
+    description: "Boundary Posture \u2014 Verify Key Vault public network access is\
+      \ disabled"
+    plane: Boundary
+    risk_level: High
+    blast_radius: Data
+    impact: If public access is enabled, secrets may be reachable outside the private
+      boundary.
+    timeout_sec_max: 120
+    script:
+    - az
+    - keyvault
+    - show
+    - -g
+    - rg-fortress-dev
+    - -n
+    - kv-fortress-dev
+    - --query
+    - properties.publicNetworkAccess
+    - -o
+    - tsv
+    remediation:
+    - az keyvault update -g rg-fortress-dev -n kv-fortress-dev --public-network-access
+      Disabled
+  keyvault_private_access:
+    description: "Boundary Posture \u2014 Verify Key Vault firewall default action\
+      \ is Deny"
+    plane: Boundary
+    risk_level: High
+    blast_radius: Network
+    impact: If default action is Allow, unauthorized networks may reach the vault.
+    timeout_sec_max: 120
+    script:
+    - az
+    - keyvault
+    - show
+    - -g
+    - rg-fortress-dev
+    - -n
+    - kv-fortress-dev
+    - --query
+    - properties.networkAcls.defaultAction
+    - -o
+    - tsv
+    remediation:
+    - az keyvault update -g rg-fortress-dev -n kv-fortress-dev --default-action Deny
+  keyvault_private_endpoint_exists:
+    plane: Boundary
+    risk_level: High
+    blast_radius: Network
+    description: "Boundary Proof \u2014 Verify Private Endpoint connectivity exists"
+    impact: If no private endpoint exists, Key Vault traffic may traverse public paths
+      or be unreachable from private workloads.
+    timeout_sec_max: 120
+    script:
+    - az
+    - keyvault
+    - show
+    - -g
+    - rg-fortress-dev
+    - -n
+    - kv-fortress-dev
+    - --query
+    - properties.privateEndpointConnections[0].id
+    - -o
+    - tsv
+    remediation:
+    - 'Escalate: Private Endpoint must be created/approved via Terraform (manual change
+      control).'
+  keyvault_rbac_enabled:
+    description: "Identity Proof \u2014 Verify RBAC authorization is enabled on Key\
+      \ Vault"
+    plane: Identity
+    risk_level: Medium
+    blast_radius: Access
+    impact: If RBAC is not enabled, access governance may rely on legacy policy modes
+      and drift from standards.
+    timeout_sec_max: 120
+    script:
+    - az
+    - keyvault
+    - show
+    - -g
+    - rg-fortress-dev
+    - -n
+    - kv-fortress-dev
+    - --query
+    - properties.enableRbacAuthorization
+    - -o
+    - tsv
+    remediation:
+    - Escalate: RBAC enablement requires change approval (can break legacy access
+        policies).
+  keyvault_purge_protection_enabled:
+    description: "Resilience Proof \u2014 Verify purge protection is enabled on Key\
+      \ Vault"
+    plane: Resilience
+    risk_level: High
+    blast_radius: Data
+    impact: Without purge protection, a deleted vault/secret may be permanently destroyed,
+      reducing recoverability.
+    timeout_sec_max: 120
+    script:
+    - az
+    - keyvault
+    - show
+    - -g
+    - rg-fortress-dev
+    - -n
+    - kv-fortress-dev
+    - --query
+    - properties.enablePurgeProtection
+    - -o
+    - tsv
+    remediation:
+    - Escalate: Purge protection often requires governance approval and may be irreversible.
+  managed_identity_token_probe:
+    description: "Identity Readiness \u2014 Verify Azure CLI authentication context\
+      \ (no token output)"
+    plane: Identity
+    risk_level: Low
+    blast_radius: Access
+    impact: If identity context is missing, proofs cannot run reliably in a governed
+      environment.
+    timeout_sec_max: 30
+    script:
+    - az
+    - account
+    - show
+    - -o
+    - none
+    remediation:
+    - 'Dev: Run `az login` once (interactive) to establish CLI context.'
+    - 'Escalate: If this should be Managed Identity, verify the workload has MSI and
+      network access to IMDS.'
